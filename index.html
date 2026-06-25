@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NikMary Pizza — Florida City, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0D0D0D;
+    --off-black: #161616;
+    --panel: #1E1C1A;
+    --tomato: #D94F2B;
+    --tomato-light: #E8673F;
+    --basil: #3A6B3C;
+    --cream: #F5F0E8;
+    --warm-gray: #A89F94;
+    --border: rgba(255,255,255,0.07);
+    --nav-h: 68px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--cream);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 2px;
+    color: var(--cream); text-decoration: none;
+  }
+  .nav-brand span { color: var(--tomato); }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.5px;
+    color: rgba(245,240,232,0.6); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-order {
+    background: var(--tomato); color: var(--cream);
+    padding: 10px 24px; border-radius: 2px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-order:hover { background: var(--tomato-light); }
+
+  .nav-mobile-btn {
+    display: none; background: none; border: none;
+    cursor: pointer; flex-direction: column; gap: 5px; padding: 8px;
+  }
+  .nav-mobile-btn span {
+    display: block; width: 22px; height: 2px;
+    background: var(--cream); border-radius: 1px;
+  }
+
+  /* ── MOBILE MENU ── */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 99;
+    background: rgba(13,13,13,0.98); backdrop-filter: blur(16px);
+    flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; letter-spacing: 2px;
+    color: var(--cream); text-decoration: none;
+  }
+  .mobile-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; color: var(--cream);
+    font-size: 28px; cursor: pointer;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding-top: var(--nav-h);
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('https://images.unsplash.com/photo-1571066811602-716837d681de?w=1800&q=80') center/cover no-repeat;
+    opacity: 0.18;
+  }
+  .hero-left {
+    position: relative; z-index: 1;
+    padding: 80px 5% 80px 7%;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--tomato);
+    border: 1px solid var(--tomato); padding: 6px 14px; border-radius: 2px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 9vw, 130px);
+    line-height: 0.9; letter-spacing: 2px;
+    color: var(--cream);
+    margin-bottom: 32px;
+  }
+  .hero h1 .accent { color: var(--tomato); }
+  .hero-desc {
+    font-size: 16px; color: rgba(245,240,232,0.65);
+    max-width: 420px; line-height: 1.8; margin-bottom: 44px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-red {
+    background: var(--tomato); color: var(--cream);
+    padding: 15px 36px; border-radius: 2px;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-red:hover { background: var(--tomato-light); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1px solid rgba(245,240,232,0.3); color: rgba(245,240,232,0.8);
+    padding: 14px 32px; border-radius: 2px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--cream); color: var(--cream); }
+
+  .hero-right {
+    position: relative; z-index: 1;
+    padding: 80px 7% 80px 5%;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .hero-fact {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 28px 32px; border-radius: 2px;
+  }
+  .hero-fact-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; color: var(--tomato); line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-fact-label {
+    font-size: 13px; color: var(--warm-gray); letter-spacing: 0.3px;
+  }
+  .hero-badge {
+    background: var(--tomato);
+    padding: 20px 32px; border-radius: 2px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .hero-badge-icon { font-size: 28px; }
+  .hero-badge-text strong {
+    display: block; font-size: 15px; font-weight: 700; color: #fff;
+    margin-bottom: 2px;
+  }
+  .hero-badge-text span { font-size: 13px; color: rgba(255,255,255,0.75); }
+
+  /* ── INFO STRIP ── */
+  .info-strip {
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 5%;
+    display: flex; align-items: center; justify-content: center;
+    gap: 48px; flex-wrap: wrap;
+  }
+  .info-strip-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: var(--warm-gray);
+  }
+  .info-strip-item strong { color: var(--cream); font-weight: 500; }
+  .info-strip-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--tomato); flex-shrink: 0;
+  }
+
+  /* ── MENU ── */
+  .menu-section { padding: 100px 5%; background: var(--black); }
+  .menu-header { max-width: 1200px; margin: 0 auto 60px; }
+  .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--tomato); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    color: var(--cream); line-height: 1.1; margin-bottom: 0;
+  }
+  .section-title em { font-style: italic; color: var(--tomato); }
+
+  .menu-cats {
+    display: flex; gap: 4px; margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .menu-cat {
+    padding: 9px 20px; border-radius: 2px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--warm-gray); transition: all 0.2s;
+  }
+  .menu-cat.active {
+    background: var(--tomato); border-color: var(--tomato);
+    color: #fff;
+  }
+  .menu-cat:hover:not(.active) { border-color: rgba(245,240,232,0.25); color: var(--cream); }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 2px; overflow: hidden;
+    max-width: 1200px; margin: 28px auto 0;
+  }
+  .menu-item {
+    background: var(--off-black); padding: 24px 28px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 16px; transition: background 0.15s;
+  }
+  .menu-item:hover { background: var(--panel); }
+  .menu-item h4 { font-size: 15px; font-weight: 600; color: var(--cream); margin-bottom: 5px; }
+  .menu-item p { font-size: 13px; color: var(--warm-gray); line-height: 1.5; }
+  .menu-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; color: var(--tomato); white-space: nowrap; flex-shrink: 0;
+  }
+  .menu-full-link { text-align: center; margin-top: 40px; }
+
+  /* ── WHY US ── */
+  .why { background: var(--panel); padding: 100px 5%; }
+  .why-inner { max-width: 1200px; margin: 0 auto; }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; margin-top: 56px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: 2px; overflow: hidden;
+  }
+  .why-card {
+    background: var(--off-black); padding: 40px 36px;
+  }
+  .why-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px; color: var(--tomato); opacity: 0.25;
+    line-height: 1; margin-bottom: 16px;
+  }
+  .why-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; color: var(--cream); margin-bottom: 12px;
+  }
+  .why-card p { font-size: 14px; color: var(--warm-gray); line-height: 1.75; }
+
+  /* ── GALLERY ── */
+  .gallery { background: var(--black); padding: 80px 0 60px; }
+  .gallery-header { padding: 0 5%; margin-bottom: 40px; max-width: 1200px; margin-left: auto; margin-right: auto; margin-bottom: 40px; }
+  .gallery-scroll {
+    overflow: hidden; width: 100%;
+  }
+  @keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .gallery-track {
+    display: flex; gap: 12px;
+    animation: slide 22s linear infinite;
+    width: max-content;
+  }
+  .gallery-img {
+    width: 380px; height: 280px;
+    object-fit: cover; border-radius: 2px; flex-shrink: 0;
+  }
+
+  /* ── REVIEWS ── */
+  .reviews { background: var(--panel); padding: 100px 5%; }
+  .reviews-inner { max-width: 1200px; margin: 0 auto; }
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 56px;
+  }
+  .review-card {
+    background: var(--off-black); padding: 32px;
+    border: 1px solid var(--border); border-radius: 2px;
+  }
+  .review-stars { color: #E8A838; font-size: 14px; letter-spacing: 2px; margin-bottom: 16px; }
+  .review-text {
+    font-size: 14px; line-height: 1.8; color: rgba(245,240,232,0.75);
+    margin-bottom: 24px; font-style: italic;
+  }
+  .reviewer {
+    display: flex; align-items: center; gap: 12px;
+    border-top: 1px solid var(--border); padding-top: 16px;
+  }
+  .reviewer-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--tomato); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .reviewer-name { font-size: 14px; font-weight: 600; color: var(--cream); }
+  .reviewer-meta { font-size: 12px; color: var(--warm-gray); }
+
+  /* ── LOCATION ── */
+  .location { background: var(--black); padding: 100px 5%; }
+  .location-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .location-map iframe {
+    width: 100%; height: 380px; border: 0; border-radius: 2px;
+    filter: grayscale(30%) invert(90%) hue-rotate(180deg);
+    display: block;
+  }
+  .location-info { padding-top: 8px; }
+  .location-block { margin-bottom: 36px; }
+  .location-block h4 {
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--tomato); margin-bottom: 10px;
+  }
+  .location-block p, .location-block a {
+    font-size: 15px; color: rgba(245,240,232,0.8);
+    text-decoration: none; display: block; line-height: 1.8;
+  }
+  .location-block a:hover { color: var(--tomato); }
+  .hours-row { display: flex; justify-content: space-between; max-width: 320px; }
+  .hours-row span { font-size: 14px; color: var(--warm-gray); }
+  .hours-row strong { font-size: 14px; color: rgba(245,240,232,0.85); font-weight: 500; }
+  .get-dir {
+    display: inline-block; margin-top: 20px;
+    font-size: 13px; color: var(--tomato); text-decoration: none;
+    border-bottom: 1px solid var(--tomato); padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+  .get-dir:hover { opacity: 0.75; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--tomato); padding: 80px 5%;
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 6vw, 72px); letter-spacing: 2px;
+    color: #fff; margin-bottom: 16px;
+  }
+  .cta-section p { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 36px; }
+  .btn-white {
+    background: #fff; color: var(--tomato);
+    padding: 16px 48px; border-radius: 2px;
+    font-size: 15px; font-weight: 700;
+    text-decoration: none; display: inline-block;
+    transition: transform 0.2s;
+  }
+  .btn-white:hover { transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--off-black); padding: 60px 5% 32px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px; max-width: 1200px; margin: 0 auto 48px;
+  }
+  .footer-brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; letter-spacing: 2px; color: var(--cream);
+    margin-bottom: 12px;
+  }
+  .footer-brand-name span { color: var(--tomato); }
+  .footer-brand p { font-size: 14px; color: var(--warm-gray); line-height: 1.75; max-width: 260px; }
+  .footer-col h5 {
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: rgba(245,240,232,0.3);
+    margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; font-size: 14px;
+    color: rgba(245,240,232,0.55); text-decoration: none;
+    margin-bottom: 10px; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 13px; color: rgba(245,240,232,0.2); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links, .nav-order { display: none; }
+    .nav-mobile-btn { display: flex; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 60px 5%; }
+    .why-grid { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .location-inner { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .info-strip { gap: 24px; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="#menu" onclick="closeMobileMenu()">Menu</a>
+  <a href="#gallery" onclick="closeMobileMenu()">Gallery</a>
+  <a href="#reviews" onclick="closeMobileMenu()">Reviews</a>
+  <a href="#location" onclick="closeMobileMenu()">Location</a>
+  <a href="tel:7865057284" style="color:var(--tomato);">Order Now</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">NIK<span>MARY</span> PIZZA</a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+  <a href="tel:7865057284" class="nav-order">Call to Order</a>
+  <button class="nav-mobile-btn" onclick="openMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Florida City, FL · Florida Keys</div>
+    <h1>REAL<br>PIZZA.<br><span class="accent">REAL</span><br>GOOD.</h1>
+    <p class="hero-desc">Artisanal pizzas crafted from high-quality ingredients. Gluten-free and vegan options available. Catering for events big and small.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-red">Explore Menu</a>
+      <a href="tel:7865057284" class="btn-outline">Call (786) 505-7284</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-fact">
+      <div class="hero-fact-num">100%</div>
+      <div class="hero-fact-label">High-quality, fresh ingredients every order</div>
+    </div>
+    <div class="hero-fact">
+      <div class="hero-fact-num">✓ GF</div>
+      <div class="hero-fact-label">Gluten-free & vegan options available</div>
+    </div>
+    <div class="hero-badge">
+      <div class="hero-badge-icon">🍕</div>
+      <div class="hero-badge-text">
+        <strong>Catering Available</strong>
+        <span>Corporate events & private parties</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-item">
+    <div class="info-strip-dot"></div>
+    <span>📍 <strong>250 Palm Dr, Florida City, FL 33034</strong></span>
+  </div>
+  <div class="info-strip-item">
+    <div class="info-strip-dot"></div>
+    <span>🕐 Open today: <strong>10:30am – 8pm</strong></span>
+  </div>
+  <div class="info-strip-item">
+    <div class="info-strip-dot"></div>
+    <span>📞 <strong>(786) 505-7284</strong></span>
+  </div>
+  <div class="info-strip-item">
+    <div class="info-strip-dot"></div>
+    <span>In <strong>Florida Keys Outlet Marketplace</strong></span>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="menu-header">
+    <div class="eyebrow">What We Serve</div>
+    <h2 class="section-title">The <em>Menu</em></h2>
+    <div class="menu-cats" id="menuCats">
+      <button class="menu-cat active" data-panel="pizza">Pizzas</button>
+      <button class="menu-cat" data-panel="pasta">Pasta</button>
+      <button class="menu-cat" data-panel="sides">Sides & Salads</button>
+      <button class="menu-cat" data-panel="drinks">Beverages</button>
+    </div>
+  </div>
+
+  <!-- PIZZAS -->
+  <div class="menu-panel active" id="panel-pizza">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div><h4>Build Your Own Pizza</h4><p>Choose your toppings your way</p></div>
+        <div class="menu-price">$23.21</div>
+      </div>
+      <div class="menu-item">
+        <div><h4>Whole Pie Cheese</h4><p>Classic cheese pizza done right</p></div>
+        <div class="menu-price">$22.20</div>
+      </div>
+      <div class="menu-item">
+        <div><h4>Whole Pie Pepperoni</h4><p>Loaded with premium pepperoni</p></div>
+        <div class="menu-price">$24.54</div>
+      </div>
+      <div class="menu-item">
+        <div><h4>Pepperoni & Sausage</h4><p>Tomato sauce, Italian sausage & pepperoni</p></div>
+        <div class="menu-price">$25.23</div>
+      </div>
+      <div class="menu-item">
+        <div><h4>Whole Pie Deluxe</h4><p>Tomato sauce, green pepper, tomatoes, sausage, onion & mushrooms</p></div>
+        <div class="menu-price">$26.24</div>
+      </div>
+      <div class="menu-item">
+        <div><h4>Hawaiian</h4><p>Tomato sauce, pineapple, ham & turkey bacon</p></div>
+        <div class="menu-price">$26.24</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASTA -->
+  <div class="menu-panel" id="panel-pasta">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div><h4>Spaghetti With Meat</h4><p>Classic meat sauce spaghetti</p></div>
+        <div class="menu-price">$12.27</div>
+      </div>
+      <div class="menu-item">
+        <div><h4>Large Spaghetti</h4><p>Generous portion of spaghetti</p></div>
+        <div class="menu-price">$10.38</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDES -->
+  <div class="menu-panel" id="panel-sides">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div><h4>Side Salad</h4><p>Fresh garden salad</p></div>
+        <div class="menu-price">$4.71</div>
+      </div>
+      <div class="menu-item">
+        <div><h4>Side Item</h4><p>Ask about today's sides</p></div>
+        <div class="menu-price">$6.04</div>
+      </div>
+      <div class="menu-item">
+        <div><h4>Extra Dressing</h4><p>Your choice of dressing</p></div>
+        <div class="menu-price">$0.50</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRINKS -->
+  <div class="menu-panel" id="panel-drinks">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div><h4>Soft Drinks</h4><p>Assorted soft drinks</p></div>
+        <div class="menu-price">$1.88</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="why-inner">
+    <div class="eyebrow">Why NikMary</div>
+    <h2 class="section-title">Crafted with <em>Purpose</em></h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">01</div>
+        <h3>Artisanal Quality</h3>
+        <p>Every pizza is crafted from high-quality ingredients with expert techniques that bring together classic and contemporary flavors in every bite.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">02</div>
+        <h3>Everyone Welcome</h3>
+        <p>Gluten-free and vegan options ensure everyone at the table has something delicious. Inclusivity is part of who we are.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">03</div>
+        <h3>Catering & Events</h3>
+        <p>From corporate lunches to private parties, our catering service brings gourmet pizza to your event and leaves a lasting impression.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <div class="eyebrow">Fresh Every Day</div>
+    <h2 class="section-title">A Look at Our <em>Food</em></h2>
+  </div>
+  <div class="gallery-scroll">
+    <div class="gallery-track">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=760&q=80" alt="Pizza">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=760&q=80" alt="Pizza">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=760&q=80" alt="Pizza">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=760&q=80" alt="Pizza">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1571066811602-716837d681de?w=760&q=80" alt="Food">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1555072956-7758afb20e8f?w=760&q=80" alt="Food">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=760&q=80" alt="Pizza">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=760&q=80" alt="Pizza">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=760&q=80" alt="Pizza">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=760&q=80" alt="Pizza">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1571066811602-716837d681de?w=760&q=80" alt="Food">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1555072956-7758afb20e8f?w=760&q=80" alt="Food">
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-inner">
+    <div class="eyebrow">What People Say</div>
+    <h2 class="section-title">Loved by Our <em>Guests</em></h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"If you're in the mood for some delicious pizza, look no further! The variety on the menu is impressive and the meat lovers' pizza was loaded with toppings. The portion sizes are generous — great value for your money."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">A</div>
+          <div>
+            <div class="reviewer-name">Ashley Woods</div>
+            <div class="reviewer-meta">Google Review · June 2025</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The pepperoni pizza was loaded with toppings, the cheese was gooey and perfectly melted. The crust had a nice crunch and wasn't too greasy. The staff was super friendly — can't wait to come back!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">P</div>
+          <div>
+            <div class="reviewer-name">Priya Hughes</div>
+            <div class="reviewer-meta">Google Review · March 2025</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The margherita pizza was absolutely divine. Perfectly thin and crispy crust, fresh basil and tomatoes, high-quality mozzarella. I can't wait to go back and try their specialty pies!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">P</div>
+          <div>
+            <div class="reviewer-name">Penelope O'Neill</div>
+            <div class="reviewer-meta">Google Review · Dec 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location" id="location">
+  <div class="location-inner">
+    <div class="location-map">
+      <div class="eyebrow" style="margin-bottom:16px;">Find Us</div>
+      <h2 class="section-title" style="margin-bottom:28px;">Come <em>Visit</em></h2>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3594.4!2d-80.473!3d25.4533!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b4f0e0000001%3A0x1234!2sNikMary+Pizza%2C+250+Palm+Dr%2C+Florida+City%2C+FL+33034!5e0!3m2!1sen!2sus"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <a href="https://maps.google.com/?q=NikMary+Pizza+Florida+City+FL" target="_blank" class="get-dir">Get Directions →</a>
+    </div>
+    <div class="location-info">
+      <div class="location-block">
+        <h4>Address</h4>
+        <p>250 Palm Dr<br>Florida City, FL 33034<br>In Florida Keys Outlet Marketplace</p>
+      </div>
+      <div class="location-block">
+        <h4>Contact</h4>
+        <a href="tel:7865057284">(786) 505-7284</a>
+      </div>
+      <div class="location-block">
+        <h4>Hours</h4>
+        <div class="hours-row"><span>Mon – Sat</span><strong>10:30am – 8pm</strong></div>
+        <div class="hours-row"><span>Sunday</span><strong>11am – 6:30pm</strong></div>
+      </div>
+      <div class="location-block">
+        <h4>Services</h4>
+        <p>Dine-In · Takeout · Delivery<br>Catering for Events & Parties</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>HUNGRY? LET'S GO.</h2>
+  <p>Call us to place an order or ask about catering your next event.</p>
+  <a href="tel:7865057284" class="btn-white">(786) 505-7284</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">NIK<span>MARY</span> PIZZA</div>
+      <p>Artisanal pizzas crafted with high-quality ingredients. Serving Florida City and the Florida Keys with pride.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Menu</h5>
+      <a href="#menu">Pizzas</a>
+      <a href="#menu">Pasta</a>
+      <a href="#menu">Sides & Salads</a>
+      <a href="#menu">Beverages</a>
+    </div>
+    <div class="footer-col">
+      <h5>Visit</h5>
+      <a href="#location">Location & Hours</a>
+      <a href="tel:7865057284">Call to Order</a>
+      <a href="#location">Catering</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <a href="tel:7865057284">(786) 505-7284</a>
+      <a href="#location">250 Palm Dr, Florida City</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 NikMary Pizza. All rights reserved.</p>
+    <p style="color:rgba(245,240,232,0.12);">Florida City, FL 33034</p>
+  </div>
+</footer>
+
+<script>
+  function openMobileMenu() {
+    document.getElementById('mobileMenu').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.menu-cat').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.menu-cat').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+      var panel = document.getElementById('panel-' + this.dataset.panel);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  window.addEventListener('scroll', function() {
+    var nav = document.querySelector('nav');
+    nav.style.background = window.scrollY > 50
+      ? 'rgba(13,13,13,0.99)'
+      : 'rgba(13,13,13,0.92)';
+  });
+</script>
+</body>
+</html>
